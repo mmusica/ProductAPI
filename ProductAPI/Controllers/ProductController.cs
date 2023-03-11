@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace ProductAPI.Controllers
 {
@@ -7,13 +6,21 @@ namespace ProductAPI.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
+        private static List<Product> products = new List<Product>
+        {
+                new Product { Id = 1, Name="Milk", Quantity= 1, Price=2}
+            };
         [HttpGet]
         public async Task<ActionResult<List<Product>>> Get()
         {
-            var products = new List<Product>
-            {
-                new Product { Id = 1, Name="Milk", Quantity= 1, Price=2}
-            };
+            
+            return Ok(products);
+        }
+        [HttpPost]
+
+        public async Task<ActionResult<List<Product>>> AddProduct(Product product)
+        {
+            products.Add(product);
             return Ok(products);
         }
     }
