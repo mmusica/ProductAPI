@@ -34,5 +34,23 @@ namespace ProductAPI.Controllers
             products.Add(product);
             return Ok(products);
         }
+        [HttpPut]
+
+        public async Task<ActionResult<List<Product>>> UpdateProduct(Product request)
+        {
+            var foundProduct = products.Find(x => x.Id == request.Id);
+            if (foundProduct == null)
+            {
+                return BadRequest("Product not found");
+            }
+            else
+            {
+                foundProduct.Id = request.Id;
+                foundProduct.Name = request.Name;
+                foundProduct.Quantity = request.Quantity;
+                foundProduct.Price = request.Price;
+            }
+            return Ok(products);
+        }
     }
 }
