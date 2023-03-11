@@ -35,7 +35,6 @@ namespace ProductAPI.Controllers
             return Ok(products);
         }
         [HttpPut]
-
         public async Task<ActionResult<List<Product>>> UpdateProduct(Product request)
         {
             var foundProduct = products.Find(x => x.Id == request.Id);
@@ -52,5 +51,21 @@ namespace ProductAPI.Controllers
             }
             return Ok(products);
         }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<List<Product>>> DeleteProduct(int id)
+        {
+            var foundProduct = products.Find(x => x.Id == id);
+            if (foundProduct == null)
+            {
+                return BadRequest("Product not found");
+            }
+            else
+            {
+                products.Remove(foundProduct);
+            }
+           
+            return Ok(products);
+        }
+
     }
 }
