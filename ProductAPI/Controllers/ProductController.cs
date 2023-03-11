@@ -8,16 +8,27 @@ namespace ProductAPI.Controllers
     {
         private static List<Product> products = new List<Product>
         {
-                new Product { Id = 1, Name="Milk", Quantity= 1, Price=2}
+                new Product { Id = 1, Name="Milk", Quantity= 1, Price=2},
+                new Product { Id = 2, Name="Bread", Quantity= 2, Price=1}
             };
         [HttpGet]
         public async Task<ActionResult<List<Product>>> Get()
         {
-            
+
             return Ok(products);
         }
-        [HttpPost]
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> GetProduct(int id)
+        {
+            var product = products.Find(x => x.Id == id);
+            if (product == null)
+            {
+                return BadRequest("Product not found");
+            }
+            return Ok(product);
+        }
 
+        [HttpPost]
         public async Task<ActionResult<List<Product>>> AddProduct(Product product)
         {
             products.Add(product);
